@@ -1,0 +1,110 @@
+
+body {
+  font-family: "Arial", sans-serif;
+  background: #fcf4ee;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin: 25px auto;
+  align-items: center;
+  row-gap: 15px;
+}
+
+.header__title {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  margin: 0;
+}
+
+.subhead__text {
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+.text-field {
+  font-family: "JetBrains Mono", monospace;
+  border-radius: 30px;
+  display: block;
+  width: 700px;
+  height: 200px;
+  margin: auto;
+  padding: 25px;
+  font-size: 30px;
+  resize: none;
+}
+
+.text-field::-webkit-scrollbar {
+  width: 0;
+}
+
+.text-field:focus {
+  outline: none;
+}
+
+.keyboard {
+  box-shadow: -3px -3px 5px rgb(63, 63, 63), 3px 3px 5px black;
+  width: 1000px;
+  margin: 25px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.keyboard__row {
+  display: flex;
+  margin: 5px;
+  width: 980px;
+}
+
+.key {
+  width: 55px;
+  height: 55px;
+  font-weight: bold;
+  margin: 0 4px;
+  color: #151414;
+  box-shadow: -2px -2px 4px rgba(63, 63, 63);
+  background-color: #caf89f;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.key.key_backspace {
+  width: 145px;
+}
+
+.key.key_capslock {
+  width: 107px;
+  text-align: center;
+}
+
+.key.key_tab,
+.key.key_alt,
+.key.key_ctrl,
+.key.key_win {
+  width: 80px;
+}
+
+.key.key_shift {
+  width: 135px;
+}
+
+.key.key_enter {
+  width: 156px;
+}
+
+.key.key_space {
+  width: 370px;
+}
+
+.key:active {
+  box-sizing: border-box;
+  box-shadow: -1px -2px 4px rgba(0, 0, 0, 0.25);
+}
