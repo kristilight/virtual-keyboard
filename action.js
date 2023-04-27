@@ -22,9 +22,7 @@ document.addEventListener('keydown', (event) => {
     textField.focus();
     if (event.code === 'CapsLock') keyboard.capsLock(event);
     if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
-    if (event.shiftKey) {
-        keyboard.upper(event);
-    }
+    if (event.shiftKey) keyboard.upper(event);
     if (event.code === 'ArrowRight') {
         event.preventDefault();
         textField.value += '►';
@@ -40,6 +38,10 @@ document.addEventListener('keydown', (event) => {
     if (event.code === 'ArrowDown') {
         event.preventDefault();
         textField.value += '▼';
+    }
+    if (event.code === 'Tab') {
+        event.preventDefault();
+        textField.value += '    ';
     }
 
     const pressBtn = document.querySelector(`[data-code=${event.code}]`);
@@ -59,18 +61,23 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-function keyboardClick() {
-
+function virtualKeyClick() {
     const keys = document.querySelectorAll('.key');
     for (let e of keys) {
         e.addEventListener('click', () => {
             if (e.dataset.ru || e.dataset.code === 'ArrowUp' || e.dataset.code === 'ArrowDown' || e.dataset.code === 'ArrowLeft' || e.dataset.code === 'ArrowRight') {
                 textField.value += e.textContent;
-            } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') textField.value = textField.value.slice(0, -1);
-            else if (e.dataset.code === 'Tab') textField.value += '    ';
-            else if (e.dataset.code === 'Enter') textField.value += '\n';
+            }
+            if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') textField.value = textField.value.slice(0, -1);
+            if (e.dataset.code === 'Tab') textField.value += '    ';
+            if (e.dataset.code === 'Enter') textField.value += '\n';
+            if (e.dataset.code === 'CapsLock') keyboard.capsLock();
+            if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
+                keyboard.upper();
+            } else keyboard.drop() ;
         })
     }
 }
 
-setTimeout(keyboardClick, 1000);
+
+setTimeout(virtualKeyClick, 200);

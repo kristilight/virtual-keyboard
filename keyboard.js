@@ -70,17 +70,15 @@ class Keyboard {
         this.upper(event);
     }
 
-    upper(event) {
+    upper() {
         const lang = this.lang;
         const keys = document.querySelectorAll('.key');
+        this.wasShift = true;
         for (let e of keys) {
-            if (event.shiftKey) {
-                this.wasShift = true;
                 if (lang === 'en') {
                     if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
                 } else {
                     if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
-                }
             }
         }
     }
