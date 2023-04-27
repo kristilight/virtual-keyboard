@@ -18,16 +18,24 @@ body.append(textField);
 body.append(keyboard.generateKeyboard());
 
 
-
 document.addEventListener('keydown', (event) => {
+    textField.focus();
     if (event.code === 'CapsLock') keyboard.capsLock(event);
     if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
     if (event.shiftKey) keyboard.upper(event);
+    const pressBtn = document.querySelector(`[data-code=${event.code}]`);
+    if (pressBtn) {
+        pressBtn.classList.add('active')
+    }
 });
 
 document.addEventListener('keyup', (event) => {
     if (event.shiftKey) {
         keyboard.removeShift(event);
+    }
+    const pressBtn = document.querySelector(`[data-code=${event.code}]`);
+    if (pressBtn) {
+        pressBtn.classList.remove('active')
     }
 });
 
@@ -35,10 +43,10 @@ function keyboardClick() {
     const keys = document.querySelectorAll('.key');
     for (let e of keys) {
         e.addEventListener('click', () => {
-            if(e.dataset.ru) textField.value += e.textContent;
-            else if(e.dataset.code==='Backspace') textField.value = textField.value.slice(0, -1);
-            else if(e.dataset.code==='Tab') textField.value += '    ';
-            else if(e.dataset.code==='Enter') textField.value += '\n';
+            if (e.dataset.ru) textField.value += e.textContent;
+            else if (e.dataset.code === 'Backspace') textField.value = textField.value.slice(0, -1);
+            else if (e.dataset.code === 'Tab') textField.value += '    ';
+            else if (e.dataset.code === 'Enter') textField.value += '\n';
         })
     }
 }

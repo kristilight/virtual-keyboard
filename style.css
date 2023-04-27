@@ -79,35 +79,35 @@ body {
   transition: 100ms;
 }
 
-.key.key_backspace {
+.key_backspace {
   width: 145px;
 }
 
-.key.key_capslock {
+.key_capslock {
   width: 107px;
   text-align: center;
 }
 
-.key.key_tab,
-.key.key_alt,
-.key.key_ctrl,
-.key.key_win {
+.key_tab,
+.key_alt,
+.key_ctrl,
+.key_win {
   width: 80px;
 }
 
-.key.key_shift {
+.key_shift {
   width: 135px;
 }
 
-.key.key_enter {
+.key_enter {
   width: 156px;
 }
 
-.key.key_space {
+.key_space {
   width: 370px;
 }
 
-.key:active {
+.key:active, .active {
   transform: translate3D(0, 0, 25px);
   border-color: hsl(0, 0%, 85%);
   box-shadow:
