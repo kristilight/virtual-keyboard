@@ -11,5 +11,4 @@ document.addEventListener('keyup', (event) => {
     if (event.shiftKey) {
         keyboard.removeShift(event);
     }
-
 });
