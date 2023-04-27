@@ -74,7 +74,7 @@ class Keyboard {
         const lang = this.lang;
         const keys = document.querySelectorAll('.key');
         for (let e of keys) {
-            if (event.shiftKey || this.shift) {
+            if (event.shiftKey) {
                 this.wasShift = true;
                 if (lang === 'en') {
                     if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;

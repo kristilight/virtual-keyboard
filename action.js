@@ -25,18 +25,34 @@ document.addEventListener('keydown', (event) => {
     if (event.shiftKey) {
         keyboard.upper(event);
     }
+    if (event.code === 'ArrowRight') {
+        event.preventDefault();
+        textField.value += '►';
+    }
+    if (event.code === 'ArrowLeft') {
+        event.preventDefault();
+        textField.value += '◄';
+    }
+    if (event.code === 'ArrowUp') {
+        event.preventDefault();
+        textField.value += '▲';
+    }
+    if (event.code === 'ArrowDown') {
+        event.preventDefault();
+        textField.value += '▼';
+    }
+
     const pressBtn = document.querySelector(`[data-code=${event.code}]`);
     if (pressBtn) {
         pressBtn.classList.add('active')
     }
+
 });
 
 document.addEventListener('keyup', (event) => {
-
     if (keyboard.wasShift) {
         keyboard.drop(event);
     }
-
     const pressBtn = document.querySelector(`[data-code=${event.code}]`);
     if (pressBtn) {
         pressBtn.classList.remove('active')
@@ -45,12 +61,12 @@ document.addEventListener('keyup', (event) => {
 
 function keyboardClick() {
 
-
     const keys = document.querySelectorAll('.key');
     for (let e of keys) {
         e.addEventListener('click', () => {
-            if (e.dataset.ru) textField.value += e.textContent;
-            else if (e.dataset.code === 'Backspace') textField.value = textField.value.slice(0, -1);
+            if (e.dataset.ru || e.dataset.code === 'ArrowUp' || e.dataset.code === 'ArrowDown' || e.dataset.code === 'ArrowLeft' || e.dataset.code === 'ArrowRight') {
+                textField.value += e.textContent;
+            } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') textField.value = textField.value.slice(0, -1);
             else if (e.dataset.code === 'Tab') textField.value += '    ';
             else if (e.dataset.code === 'Enter') textField.value += '\n';
         })

@@ -96,7 +96,7 @@ body {
 }
 
 .key_shift {
-  width: 135px;
+  width: 132px;
 }
 
 .key_enter {
@@ -104,7 +104,7 @@ body {
 }
 
 .key_space {
-  width: 370px;
+  width: 365px;
 }
 
 .key:active, .active {
