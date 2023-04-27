@@ -1,14 +1,5 @@
 import keyData from './key-data.js';
-
-const createDomNode = (element, innerHTML, ...classes) => {
-    const node = document.createElement(element);
-    node.classList.add(...classes);
-    node.innerHTML = innerHTML;
-    return node;
-};
-
-const body = document.body;
-const textField = createDomNode('textarea', '', 'text-field');
+import createElement from './create.js';
 
 class Keyboard {
     constructor() {
@@ -25,14 +16,15 @@ class Keyboard {
         }
     }
 
+    // Add to keyboard
     generateKeyboard() {
         this.saveLang();
-        const keyboard = createDomNode('div', '', 'keyboard');
+        const keyboard = createElement('div', '', 'keyboard');
         for (let i = 0; i < keyData.length; i++) {
-            const row = createDomNode('div', '', 'keyboard__row');
+            const row = createElement('div', '', 'keyboard__row');
             keyData[i].forEach((e) => {
                 const keyText = (e.key.ru && e.key.en) ? e.key[this.lang] : e.key;
-                const key = createDomNode('button', keyText, 'key');
+                const key = createElement('button', keyText, 'key');
                 if (e.class) key.classList.add(e.class);
                 row.append(key);
                 key.dataset.code = e.code;
@@ -60,11 +52,11 @@ class Keyboard {
             this.caps = 'on';
         }
 
-        for (let key of keys) {
+        for (let e of keys) {
             if (this.caps === 'on') {
-                if (key.dataset[lang]) key.innerHTML = key.dataset[lang].toUpperCase();
+                if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toUpperCase();
             } else {
-                if (key.dataset[lang]) key.innerHTML = key.dataset[lang].toLowerCase();
+                if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toLowerCase();
             }
         }
     }
@@ -106,19 +98,6 @@ class Keyboard {
 }
 
 const keyboard = new Keyboard();
-
-const createHeader = () => {
-    const header = createDomNode('div', '', 'header');
-    header.append(createDomNode('h1', 'Virtual Keyboard', 'header__title'));
-    header.append(createDomNode('p', 'Change Language: Ctrl + Alt', 'subhead__text'));
-    header.append(createDomNode('p', 'Made for: Windows', 'subhead__text'));
-    body.append(header);
-};
-
-
-createHeader();
-body.append(textField);
-body.append(keyboard.generateKeyboard());
 
 
 export default keyboard;
