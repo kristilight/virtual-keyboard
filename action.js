@@ -22,7 +22,9 @@ document.addEventListener('keydown', (event) => {
     textField.focus();
     if (event.code === 'CapsLock') keyboard.capsLock(event);
     if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
-    if (event.shiftKey) keyboard.upper(event);
+    if (event.shiftKey) {
+        keyboard.upper(event);
+    }
     const pressBtn = document.querySelector(`[data-code=${event.code}]`);
     if (pressBtn) {
         pressBtn.classList.add('active')
@@ -30,9 +32,11 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
-    if (event.shiftKey) {
-        keyboard.removeShift(event);
+
+    if (keyboard.wasShift) {
+        keyboard.drop(event);
     }
+
     const pressBtn = document.querySelector(`[data-code=${event.code}]`);
     if (pressBtn) {
         pressBtn.classList.remove('active')
@@ -40,6 +44,8 @@ document.addEventListener('keyup', (event) => {
 });
 
 function keyboardClick() {
+
+
     const keys = document.querySelectorAll('.key');
     for (let e of keys) {
         e.addEventListener('click', () => {

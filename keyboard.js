@@ -5,7 +5,6 @@ class Keyboard {
     constructor() {
         this.lang = 'en';
         this.caps = 'off';
-        this.shift = false;
     }
 
     saveLang() {
@@ -76,24 +75,29 @@ class Keyboard {
         const keys = document.querySelectorAll('.key');
         for (let e of keys) {
             if (event.shiftKey || this.shift) {
+                this.wasShift = true;
                 if (lang === 'en') {
                     if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
                 } else {
                     if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
                 }
-            } else {
-                if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
             }
         }
     }
 
-
-    removeShift(event) {
-        if (this.shift) {
-            this.shift = !this.shift;
-            this.upper(event);
+    drop() {
+        const lang = this.lang;
+        const keys = document.querySelectorAll('.key');
+        this.wasShift = false;
+        for (let e of keys) {
+            if (lang === 'en') {
+                if (e.dataset.en) e.innerHTML = e.dataset.en;
+            } else {
+                if (e.dataset.ru) e.innerHTML = e.dataset.ru;
+            }
         }
     }
+
 
 }
 
