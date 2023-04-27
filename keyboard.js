@@ -41,13 +41,23 @@ class Keyboard {
         return keyboard;
     }
 
-    capsLock(event) {
+    capsLock() {
+        let lang = this.lang;
+        const keys = document.querySelectorAll('.key');
+
         if (this.caps === 'on') {
             this.caps = 'off';
         } else {
             this.caps = 'on';
         }
-        this.upper(event);
+
+        for (let key of keys) {
+            if (this.caps === 'on') {
+                if (key.dataset[lang]) key.innerHTML = key.dataset[lang].toUpperCase();
+            } else {
+                if (key.dataset[lang]) key.innerHTML = key.dataset[lang].toLowerCase();
+            }
+        }
     }
 
     changeLang(event) {
@@ -61,24 +71,21 @@ class Keyboard {
     }
 
     upper(event) {
-        const {lang} = this;
+        const lang = this.lang;
         const keys = document.querySelectorAll('.key');
-        if (event.shiftKey || this.shift) {
-            if (lang === 'en') {
-                keys.forEach((e) => {
+        for (let e of keys) {
+            if (event.shiftKey || this.shift) {
+                if (lang === 'en') {
                     if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
-                });
-            } else {
-                keys.forEach((e) => {
+                } else {
                     if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
-                });
-            }
-        } else {
-            keys.forEach((e) => {
+                }
+            } else {
                 if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
-            });
+            }
         }
     }
+
 
     removeShift(event) {
         if (this.shift) {

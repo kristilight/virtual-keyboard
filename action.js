@@ -10,7 +10,6 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
     if (event.shiftKey) {
         keyboard.removeShift(event);
-        keyboard.upper(event);
     }
 
 });
