@@ -17,7 +17,16 @@ class Keyboard {
         this.shift = false;
     }
 
+    saveLang() {
+        if (localStorage.getItem('lang')) {
+            this.lang = localStorage.getItem('lang');
+        } else {
+            localStorage.setItem('lang', this.lang);
+        }
+    }
+
     generateKeyboard() {
+        this.saveLang();
         const keyboard = createDomNode('div', '', 'keyboard');
         for (let i = 0; i < keyData.length; i++) {
             const row = createDomNode('div', '', 'keyboard__row');
