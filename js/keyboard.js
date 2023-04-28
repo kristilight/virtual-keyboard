@@ -33,6 +33,9 @@ class Keyboard {
           key.dataset.ruShift = e.shift.ru;
           key.dataset.enShift = e.shift.en;
         }
+        if (e.arrow) {
+          key.dataset.arrow = e.arrow;
+        }
       });
       keyboard.append(row);
     }
@@ -48,34 +51,51 @@ class Keyboard {
     } else {
       this.caps = 'on';
     }
-
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
       if (this.caps === 'on') {
-        if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toUpperCase();
-      } else if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toLowerCase();
+        if (e.dataset.code === 'CapsLock') e.classList.add('active');
+        if (e.dataset[lang]) {
+          e.innerHTML = e.dataset[lang].toUpperCase();
+        }
+      } else {
+        if (e.dataset.code === 'CapsLock') e.classList.remove('active');
+        if (e.dataset[lang]) {
+          e.innerHTML = e.dataset[lang].toLowerCase();
+        }
+      }
     }
   }
 
-  changeLang(event) {
+  changeLang() {
     if (this.lang === 'en') {
       this.lang = 'ru';
     } else {
       this.lang = 'en';
     }
     localStorage.setItem('lang', this.lang);
-    this.upper(event);
+    const keys = document.querySelectorAll('.key');
+    for (let i = 0; i < keys.length; i += 1) {
+      const e = keys[i];
+      if (e.dataset[this.lang] && this.caps === 'off') {
+        e.innerHTML = e.dataset[this.lang];
+      } else if (e.dataset[this.lang] && this.caps === 'on') {
+        e.innerHTML = e.dataset[this.lang].toUpperCase();
+      }
+    }
   }
 
-  upper() {
+  shiftUpper() {
     const { lang } = this;
     const keys = document.querySelectorAll('.key');
     this.wasShift = true;
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
-      if (lang === 'en') {
-        if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
-      } else if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
+      if (e.dataset[`${lang}Shift`] && this.caps === 'off') {
+        e.innerHTML = e.dataset[`${lang}Shift`];
+      } else if (e.dataset[`${lang}Shift`] && this.caps === 'on') {
+        e.innerHTML = e.dataset[`${lang}Shift`].toLowerCase();
+      }
     }
   }
 
@@ -85,9 +105,11 @@ class Keyboard {
     this.wasShift = false;
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
-      if (lang === 'en') {
-        if (e.dataset.en) e.innerHTML = e.dataset.en;
-      } else if (e.dataset.ru) e.innerHTML = e.dataset.ru;
+      if (e.dataset.en && this.caps === 'off') {
+        e.innerHTML = e.dataset[lang];
+      } else if (e.dataset[`${lang}Shift`] && this.caps === 'on') {
+        e.innerHTML = e.dataset[lang].toUpperCase();
+      }
     }
   }
 }
