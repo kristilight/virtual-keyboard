@@ -32,8 +32,6 @@ class Keyboard {
           key.dataset.en = e.key.en;
           key.dataset.ruShift = e.shift.ru;
           key.dataset.enShift = e.shift.en;
-        } else {
-          key.dataset.noType = 'true';
         }
       });
       keyboard.append(row);
