@@ -51,7 +51,8 @@ class Keyboard {
       this.caps = 'on';
     }
 
-    for (const e of keys) {
+    for (let i = 0; i < keys.length; i += 1) {
+      const e = keys[i];
       if (this.caps === 'on') {
         if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toUpperCase();
       } else if (e.dataset[lang]) e.innerHTML = e.dataset[lang].toLowerCase();
@@ -72,7 +73,8 @@ class Keyboard {
     const { lang } = this;
     const keys = document.querySelectorAll('.key');
     this.wasShift = true;
-    for (const e of keys) {
+    for (let i = 0; i < keys.length; i += 1) {
+      const e = keys[i];
       if (lang === 'en') {
         if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
       } else if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
@@ -83,7 +85,8 @@ class Keyboard {
     const { lang } = this;
     const keys = document.querySelectorAll('.key');
     this.wasShift = false;
-    for (const e of keys) {
+    for (let i = 0; i < keys.length; i += 1) {
+      const e = keys[i];
       if (lang === 'en') {
         if (e.dataset.en) e.innerHTML = e.dataset.en;
       } else if (e.dataset.ru) e.innerHTML = e.dataset.ru;

@@ -61,7 +61,8 @@ document.addEventListener('keyup', (event) => {
 
 function virtualKeyClick() {
   const keys = document.querySelectorAll('.key');
-  for (const e of keys) {
+  for (let i = 0; i < keys.length; i += 1) {
+    const e = keys[i];
     e.addEventListener('click', () => {
       if (e.dataset.ru || e.dataset.code === 'ArrowUp' || e.dataset.code === 'ArrowDown' || e.dataset.code === 'ArrowLeft' || e.dataset.code === 'ArrowRight') {
         textField.value += e.textContent;
