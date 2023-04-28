@@ -68,7 +68,7 @@ const keyData = [
     { key: { ru: 'ю', en: '.' }, shift: { ru: 'Ю', en: '>' }, code: 'Period' },
     { key: { ru: '.', en: '/' }, shift: { ru: ',', en: '?' }, code: 'Slash' },
 
-    { key: '▲', code: 'ArrowUp' },
+    { key: '▲', code: 'ArrowUp', arrow: '▲' },
     { key: 'Shift', code: 'ShiftRight', class: 'key_shift' },
   ],
   [
@@ -78,9 +78,9 @@ const keyData = [
     { key: ' ', code: 'Space', class: 'key_space' },
     { key: 'Alt', code: 'AltRight', class: 'key_alt' },
 
-    { key: '◄', code: 'ArrowLeft' },
-    { key: '▼', code: 'ArrowDown' },
-    { key: '►', code: 'ArrowRight' },
+    { key: '◄', code: 'ArrowLeft', arrow: '◄' },
+    { key: '▼', code: 'ArrowDown', arrow: '▼' },
+    { key: '►', code: 'ArrowRight', arrow: '►' },
     { key: 'Ctrl', code: 'ControlRight', class: 'key_ctrl' },
   ],
 ];
