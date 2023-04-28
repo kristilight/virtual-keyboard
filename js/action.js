@@ -19,9 +19,12 @@ body.append(keyboard.generateKeyboard());
 
 document.addEventListener('keydown', (event) => {
   textField.focus();
-  if (event.code === 'CapsLock') keyboard.capsLock(event);
-  if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
-  if (event.shiftKey) keyboard.upper(event);
+  if (event.code === 'CapsLock') {
+    event.preventDefault();
+    keyboard.capsLock(event);
+  }
+  if (event.altKey && event.shiftKey) keyboard.changeLang(event);
+  if (event.shiftKey) keyboard.shiftUpper(event);
   if (event.code === 'ArrowRight') {
     event.preventDefault();
     textField.value += '►';
@@ -43,8 +46,18 @@ document.addEventListener('keydown', (event) => {
     textField.value += '    ';
   }
 
+  const keys = document.querySelectorAll('.key');
+
+  event.preventDefault();
+  for (let i = 0; i < keys.length; i += 1) {
+    const e = keys[i];
+    if (event.code === e.dataset.code && e.dataset.ru) {
+      textField.value += e.textContent;
+    }
+  }
+
   const pressKey = document.querySelector(`[data-code=${event.code}]`);
-  if (pressKey) {
+  if (pressKey && event.code !== 'CapsLock') {
     pressKey.classList.add('active');
   }
 });
@@ -54,27 +67,35 @@ document.addEventListener('keyup', (event) => {
     keyboard.shiftDrop(event);
   }
   const pressKey = document.querySelector(`[data-code=${event.code}]`);
-  if (pressKey) {
+  if (pressKey && event.code !== 'CapsLock') {
     pressKey.classList.remove('active');
   }
 });
 
 function virtualKeyClick() {
   const keys = document.querySelectorAll('.key');
+
+  const pressCaps = document.querySelector('[data-code=CapsLock]');
+  pressCaps.addEventListener('click', () => { keyboard.capsLock(); });
+
   for (let i = 0; i < keys.length; i += 1) {
     const e = keys[i];
-    e.addEventListener('click', () => {
-      if (e.dataset.ru || e.dataset.code === 'ArrowUp' || e.dataset.code === 'ArrowDown' || e.dataset.code === 'ArrowLeft' || e.dataset.code === 'ArrowRight') {
+    if (e.dataset.ru || e.dataset.code === 'ArrowUp' || e.dataset.code === 'ArrowDown' || e.dataset.code === 'ArrowLeft' || e.dataset.code === 'ArrowRight') {
+      e.addEventListener('click', () => {
         textField.value += e.textContent;
-      }
-      if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') textField.value = textField.value.slice(0, -1);
-      if (e.dataset.code === 'Tab') textField.value += '    ';
-      if (e.dataset.code === 'Enter') textField.value += '\n';
-      if (e.dataset.code === 'CapsLock') keyboard.capsLock();
-      if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
-        keyboard.upper();
-      } else keyboard.shiftDrop();
-    });
+        keyboard.shiftDrop();
+      });
+    } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') {
+      e.addEventListener('click', () => { textField.value = textField.value.slice(0, -1); });
+    } else if (e.dataset.code === 'Tab') {
+      e.addEventListener('click', () => { textField.value = '    '; });
+    } else if (e.dataset.code === 'Space') {
+      e.addEventListener('click', () => { textField.value = ' '; });
+    } else if (e.dataset.code === 'Enter') {
+      e.addEventListener('click', () => { textField.value = '\n'; });
+    } else if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
+      e.addEventListener('click', () => (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop()));
+    }
   }
 }
 
