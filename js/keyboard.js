@@ -27,13 +27,13 @@ class Keyboard {
         if (e.class) key.classList.add(e.class);
         row.append(key);
         key.dataset.code = e.code;
-        if (e.key.ru && e.key.en && e.shift) {
+        if (e.key.ru && e.key.en) {
           key.dataset.ru = e.key.ru;
           key.dataset.en = e.key.en;
+        } else if (e.shift) {
           key.dataset.ruShift = e.shift.ru;
           key.dataset.enShift = e.shift.en;
-        }
-        if (e.arrow) {
+        } else if (e.arrow) {
           key.dataset.arrow = e.arrow;
         }
       });

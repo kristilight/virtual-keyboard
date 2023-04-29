@@ -73,9 +73,9 @@ const keyData = [
   ],
   [
     { key: 'Ctrl', code: 'ControlLeft', class: 'key_ctrl' },
-    { key: 'Win', code: 'Lang', class: 'key_win' },
+    { key: 'Win', code: 'MetaLeft', class: 'key_win' },
     { key: 'Alt', code: 'AltLeft', class: 'key_alt' },
-    { key: ' ', code: 'Space', class: 'key_space' },
+    { key: { ru: ' ', en: ' ' }, code: 'Space', class: 'key_space' },
     { key: 'Alt', code: 'AltRight', class: 'key_alt' },
 
     { key: '◄', code: 'ArrowLeft', arrow: '◄' },
