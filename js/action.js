@@ -17,15 +17,68 @@ const textField = createElement('textarea', '', 'text-field');
 body.append(textField);
 body.append(keyboard.generateKeyboard());
 
+function keyOn(code) {
+  let cursorStart = textField.selectionStart;
+  const cursorEnd = textField.selectionEnd;
+  let textBeforeCursor = textField.value.slice(0, cursorStart);
+  let textAfterCursor = textField.value.slice(cursorEnd);
+
+  if (code === 'Backspace') {
+    if (cursorStart === cursorEnd) {
+      textBeforeCursor = textBeforeCursor.slice(0, -1);
+      cursorStart = cursorStart - (cursorStart > 0) ? 2 : 1;
+    } else {
+      cursorStart -= 1;
+    }
+    textField.value = textBeforeCursor + textAfterCursor;
+    textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
+  }
+
+  if (code === 'Enter') {
+    if (cursorStart === cursorEnd) {
+      textField.value = `${textBeforeCursor}\n${textAfterCursor}`;
+      textField.setSelectionRange(cursorEnd + 1, cursorEnd + 1);
+    } else {
+      textField.setRangeText('');
+      const cursorE = textField.selectionEnd;
+      textField.value = `${textBeforeCursor}\n${textAfterCursor}`;
+      textField.setSelectionRange(cursorE + 1, cursorE + 1);
+    }
+  }
+
+  if (code === 'Tab') {
+    textField.value = `${textBeforeCursor}    ${textAfterCursor}`;
+    textField.setSelectionRange(cursorStart + 4, cursorStart + 4);
+  }
+
+  if (code === 'Delete') {
+    textAfterCursor = textAfterCursor.slice(1);
+    cursorStart -= 1;
+    textField.value = textBeforeCursor + textAfterCursor;
+    textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
+  }
+
+  const keys = document.querySelectorAll('.key');
+  for (let i = 0; i < keys.length; i += 1) {
+    const e = keys[i];
+    if ((code === e.dataset.code && e.dataset.ru)
+            || (code === e.dataset.code && e.dataset.arrow)) {
+      textField.value = textBeforeCursor + e.textContent + textAfterCursor;
+      textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
+    }
+  }
+}
+
 document.addEventListener('keydown', (event) => {
   textField.focus();
+
   if (event.code === 'CapsLock') {
     event.preventDefault();
     keyboard.capsLock(event);
   }
   if (event.code === 'Tab') {
     event.preventDefault();
-    textField.value += '    ';
+    keyOn(event.code);
   }
   if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
   if (event.shiftKey) keyboard.shiftUpper(event);
@@ -35,9 +88,9 @@ document.addEventListener('keydown', (event) => {
     const e = keys[i];
 
     if ((event.code === e.dataset.code && e.dataset.ru && e.dataset.en)
-        || (event.code === e.dataset.code && e.dataset.arrow)) {
+            || (event.code === e.dataset.code && e.dataset.arrow)) {
       event.preventDefault();
-      textField.value += e.textContent;
+      keyOn(event.code);
     }
   }
 
@@ -69,24 +122,34 @@ function virtualKeyClick() {
     const e = keys[i];
     if (e.dataset.ru || e.dataset.arrow) {
       e.addEventListener('click', () => {
-        textField.value += e.textContent;
+        textField.focus();
+        keyOn(e.dataset.code);
         keyboard.shiftDrop();
       });
-    } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete') {
+    } else if (e.dataset.code === 'Backspace') {
       e.addEventListener('click', () => {
-        textField.value = textField.value.slice(0, -1);
+        textField.focus();
+        keyOn(e.dataset.code);
+      });
+    } else if (e.dataset.code === 'Delete') {
+      e.addEventListener('click', () => {
+        textField.focus();
+        keyOn(e.dataset.code);
       });
     } else if (e.dataset.code === 'Tab') {
       e.addEventListener('click', () => {
-        textField.value = '    ';
+        textField.focus();
+        keyOn(e.dataset.code);
       });
     } else if (e.dataset.code === 'Space') {
       e.addEventListener('click', () => {
-        textField.value = ' ';
+        textField.focus();
+        keyOn(e.dataset.code);
       });
     } else if (e.dataset.code === 'Enter') {
       e.addEventListener('click', () => {
-        textField.value = '\n';
+        textField.focus();
+        keyOn(e.dataset.code);
       });
     } else if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
       e.addEventListener('click', () => (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop()));
