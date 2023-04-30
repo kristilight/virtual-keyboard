@@ -26,11 +26,11 @@ function keyOn(code) {
   if (code === 'Backspace') {
     if (cursorStart === cursorEnd) {
       textBeforeCursor = textBeforeCursor.slice(0, -1);
-      let offset = (cursorStart > 0) ? 2 : 1;
-      cursorStart = cursorStart - offset;
+      const offset = (cursorStart > 0) ? 2 : 1;
+      cursorStart -= offset;
     } else cursorStart -= 1;
     textField.value = textBeforeCursor + textAfterCursor;
-    textField.setSelectionRange(cursorStart+1 , cursorStart+1 );
+    textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
   }
 
   if (code === 'Enter') {
@@ -58,7 +58,7 @@ function keyOn(code) {
     if ((code === e.dataset.code && e.dataset.ru)
             || (code === e.dataset.code && e.dataset.arrow)) {
       textField.value = textBeforeCursor + e.textContent + textAfterCursor;
-      textField.setSelectionRange(cursorStart+1, cursorStart+1);
+      textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
     }
   }
 }
@@ -123,16 +123,23 @@ function virtualKeyClick() {
         keyboard.shiftDrop();
       });
     } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete' || e.dataset.code === 'Tab'
-        || e.dataset.code === 'Space' || e.dataset.code === 'Enter') {
+            || e.dataset.code === 'Space' || e.dataset.code === 'Enter') {
       e.addEventListener('click', () => {
         textField.focus();
         keyOn(e.dataset.code);
         keyboard.shiftDrop();
       });
     } else if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
-      e.addEventListener('click', () => (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop()));
+      e.addEventListener('click', () => {
+        e.classList.add('active');
+        if (!keyboard.wasShift) {
+          keyboard.shiftUpper();
+        } else keyboard.shiftDrop();
+      });
     } else if (e.dataset.code) {
-      e.addEventListener('click', () => { keyboard.shiftDrop(); });
+      e.addEventListener('click', () => {
+        keyboard.shiftDrop();
+      });
     }
   }
 }

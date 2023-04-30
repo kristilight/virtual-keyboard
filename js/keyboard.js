@@ -108,7 +108,8 @@ class Keyboard {
     this.wasShift = false;
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
-      if (e.dataset[lang]  && this.caps === 'off') {
+      if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') e.classList.remove('active');
+      if (e.dataset[lang] && this.caps === 'off') {
         e.innerHTML = e.dataset[lang];
       } else if (e.dataset[`${lang}Shift`] && this.caps === 'on') {
         e.innerHTML = e.dataset[lang].toUpperCase();
