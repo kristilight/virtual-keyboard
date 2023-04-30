@@ -30,10 +30,12 @@ class Keyboard {
         if (e.key.ru && e.key.en) {
           key.dataset.ru = e.key.ru;
           key.dataset.en = e.key.en;
-        } else if (e.shift) {
+        }
+        if (e.shift) {
           key.dataset.ruShift = e.shift.ru;
           key.dataset.enShift = e.shift.en;
-        } else if (e.arrow) {
+        }
+        if (e.arrow) {
           key.dataset.arrow = e.arrow;
         }
       });
@@ -89,6 +91,7 @@ class Keyboard {
     const { lang } = this;
     const keys = document.querySelectorAll('.key');
     this.wasShift = true;
+
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
       if (e.dataset[`${lang}Shift`] && this.caps === 'off') {
@@ -105,7 +108,7 @@ class Keyboard {
     this.wasShift = false;
     for (let i = 0; i < keys.length; i += 1) {
       const e = keys[i];
-      if (e.dataset.en && this.caps === 'off') {
+      if (e.dataset[lang]  && this.caps === 'off') {
         e.innerHTML = e.dataset[lang];
       } else if (e.dataset[`${lang}Shift`] && this.caps === 'on') {
         e.innerHTML = e.dataset[lang].toUpperCase();

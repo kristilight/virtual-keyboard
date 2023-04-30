@@ -26,37 +26,27 @@ function keyOn(code) {
   if (code === 'Backspace') {
     if (cursorStart === cursorEnd) {
       textBeforeCursor = textBeforeCursor.slice(0, -1);
-      cursorStart = cursorStart - (cursorStart > 0) ? 2 : 1;
-    } else {
-      cursorStart -= 1;
-    }
+      let offset = (cursorStart > 0) ? 2 : 1;
+      cursorStart = cursorStart - offset;
+    } else cursorStart -= 1;
     textField.value = textBeforeCursor + textAfterCursor;
-    textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
+    textField.setSelectionRange(cursorStart+1 , cursorStart+1 );
   }
 
   if (code === 'Enter') {
-    if (cursorStart === cursorEnd) {
-      textField.value = `${textBeforeCursor}\n${textAfterCursor}`;
-      textField.setSelectionRange(cursorEnd + 1, cursorEnd + 1);
-    } else {
-      textField.setRangeText('');
-      const cursorE = textField.selectionEnd;
-      textField.value = `${textBeforeCursor}\n${textAfterCursor}`;
-      textField.setSelectionRange(cursorE + 1, cursorE + 1);
-    }
+    textField.value = `${textBeforeCursor}\n${textAfterCursor}`;
+    textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
   }
 
   if (code === 'Tab') {
-    if (textAfterCursor.length >= 1) {
-      textField.value = `${textBeforeCursor}    ${textAfterCursor}`;
-      textField.setSelectionRange(cursorStart + 4, cursorStart + 4);
-    } else {
-      textField.value = `${textBeforeCursor}    `;
-    }
+    textField.value = `${textBeforeCursor}    ${textAfterCursor}`;
+    textField.setSelectionRange(cursorStart + 4, cursorStart + 4);
   }
 
   if (code === 'Delete') {
-    textAfterCursor = textAfterCursor.slice(1);
+    if (cursorStart === cursorEnd) {
+      textAfterCursor = textAfterCursor.slice(1);
+    }
     cursorStart -= 1;
     textField.value = textBeforeCursor + textAfterCursor;
     textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
@@ -68,7 +58,7 @@ function keyOn(code) {
     if ((code === e.dataset.code && e.dataset.ru)
             || (code === e.dataset.code && e.dataset.arrow)) {
       textField.value = textBeforeCursor + e.textContent + textAfterCursor;
-      textField.setSelectionRange(cursorStart + 1, cursorStart + 1);
+      textField.setSelectionRange(cursorStart+1, cursorStart+1);
     }
   }
 }
@@ -85,7 +75,9 @@ document.addEventListener('keydown', (event) => {
     keyOn(event.code);
   }
   if (event.altKey && event.ctrlKey) keyboard.changeLang(event);
-  if (event.shiftKey) keyboard.shiftUpper(event);
+  if (event.shiftKey) {
+    keyboard.shiftUpper(event);
+  }
 
   const keys = document.querySelectorAll('.key');
   for (let i = 0; i < keys.length; i += 1) {
@@ -130,33 +122,17 @@ function virtualKeyClick() {
         keyOn(e.dataset.code);
         keyboard.shiftDrop();
       });
-    } else if (e.dataset.code === 'Backspace') {
+    } else if (e.dataset.code === 'Backspace' || e.dataset.code === 'Delete' || e.dataset.code === 'Tab'
+        || e.dataset.code === 'Space' || e.dataset.code === 'Enter') {
       e.addEventListener('click', () => {
         textField.focus();
         keyOn(e.dataset.code);
-      });
-    } else if (e.dataset.code === 'Delete') {
-      e.addEventListener('click', () => {
-        textField.focus();
-        keyOn(e.dataset.code);
-      });
-    } else if (e.dataset.code === 'Tab') {
-      e.addEventListener('click', () => {
-        textField.focus();
-        keyOn(e.dataset.code);
-      });
-    } else if (e.dataset.code === 'Space') {
-      e.addEventListener('click', () => {
-        textField.focus();
-        keyOn(e.dataset.code);
-      });
-    } else if (e.dataset.code === 'Enter') {
-      e.addEventListener('click', () => {
-        textField.focus();
-        keyOn(e.dataset.code);
+        keyboard.shiftDrop();
       });
     } else if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
       e.addEventListener('click', () => (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop()));
+    } else if (e.dataset.code) {
+      e.addEventListener('click', () => { keyboard.shiftDrop(); });
     }
   }
 }
