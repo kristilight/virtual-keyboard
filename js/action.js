@@ -130,7 +130,11 @@ function virtualKeyClick() {
         keyboard.shiftDrop();
       });
     } else if (e.dataset.code === 'ShiftLeft' || e.dataset.code === 'ShiftRight') {
-      e.addEventListener('click', () => (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop()));
+      e.addEventListener('click', () => {
+        e.classList.add('active');
+        (!keyboard.wasShift ? keyboard.shiftUpper() : keyboard.shiftDrop())
+      });
+
     } else if (e.dataset.code) {
       e.addEventListener('click', () => { keyboard.shiftDrop(); });
     }
