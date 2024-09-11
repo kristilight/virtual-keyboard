@@ -1,0 +1,120 @@
+
+body {
+  font-family: "Arial", sans-serif;
+  background: #fcf4ee;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin: 25px auto;
+  align-items: center;
+  row-gap: 15px;
+}
+
+.header__title {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  margin: 0;
+}
+
+.subhead__text {
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+.text-field {
+  font-family: "JetBrains Mono", monospace;
+  border-radius: 30px;
+  display: block;
+  width: 700px;
+  height: 200px;
+  margin: auto;
+  padding: 25px;
+  font-size: 30px;
+  resize: none;
+}
+
+.text-field::-webkit-scrollbar {
+  width: 0;
+}
+
+.text-field:focus {
+  outline: none;
+}
+
+.keyboard {
+  box-shadow: -3px -3px 5px rgb(63, 63, 63), 3px 3px 5px black;
+  width: 1000px;
+  margin: 25px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.keyboard__row {
+  display: flex;
+  margin: 5px;
+  width: 980px;
+}
+
+.key {
+  width: 55px;
+  height: 55px;
+  font-weight: bold;
+  margin: 0 4px;
+  color: #151414;
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.01),
+  -2px -2px 6px rgba(255, 255, 255, 0.03),
+  2px 2px 5px rgba(0, 0, 0, 0.3),
+  5px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #caf89f;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 100ms;
+}
+
+.key_backspace {
+  width: 145px;
+}
+
+.key_capslock {
+  width: 107px;
+  text-align: center;
+}
+
+.key_tab,
+.key_alt,
+.key_ctrl,
+.key_win {
+  width: 80px;
+}
+
+.key_shift {
+  width: 132px;
+}
+
+.key_enter {
+  width: 156px;
+}
+
+.key_space {
+  width: 365px;
+}
+
+.key:active, .active {
+  transform: translate3D(0, 0, 25px);
+  border-color: hsl(0, 0%, 85%);
+  box-shadow:
+      -5px -5px 10px rgba(255, 255, 255, 0.01),
+      -2px -2px 6px rgba(255, 255, 255, 0.03),
+      2px 2px 5px rgba(0, 0, 0, 0.3),
+      5px 5px 10px rgba(0, 0, 0, 0.3),
+      0  2px 5px rgb(0, 0, 0),
+      0  5px 20px rgba(0,0,0);
+}
