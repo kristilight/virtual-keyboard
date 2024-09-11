@@ -4,10 +4,10 @@
 
 The Virtual Keyboard Project provides an interactive interface for text input, supporting both physical and virtual keyboard interactions. The structure of the code is designed to create a fluid user experience by combining dynamic DOM manipulation with event-driven input handling.
 
-## Getting Started
+### Getting Started
 **Deploy: https://crystal-twinkle.github.io/virtual-keyboard/**
 
-### Code Overview:
+## Code Overview:
 1. Keyboard Initialization and Language Persistence:
 - The keyboard's language setting is stored and persisted using localStorage, ensuring that the user's language choice is remembered across sessions.
 
